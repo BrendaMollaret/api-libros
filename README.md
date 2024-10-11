@@ -1,4 +1,4 @@
-#Pasos para poder usar este proyecto 
+# Pasos para poder usar este proyecto 
 
 1. Descargarse este repo
 2. En la terminal deben estan en la carpeta donde pusieron todo este proyecto.

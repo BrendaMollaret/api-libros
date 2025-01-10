@@ -4,6 +4,11 @@
 ## **Descripción**
 Este proyecto es una API para la gestión de una biblioteca. Permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre libros, así como funcionalidades específicas como prestar y devolver libros. Ideal para gestionar colecciones de libros en una biblioteca física o digital.
 
+### Nota:
+Esta API de Libros es un recurso educativo diseñado para enseñar desarrollo web con la stack MERN (MongoDB, Express, React, Node.js). Pensado para clases y talleres, este proyecto guía a estudiantes en la creación de una API funcional con operaciones CRUD, conexión a bases de datos y manejo de rutas.
+
+Ideal para introducir conceptos clave como APIs RESTful, diseño backend y flujo de datos en un entorno práctico y progresivo.
+
 ---
 
 ## **Características**

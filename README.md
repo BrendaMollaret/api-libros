@@ -104,10 +104,10 @@ gestor-biblioteca/
 
 ## **Próximos Pasos**
 - Integrar autenticación de usuarios para gestionar permisos.
-- Añadir soporte para almacenamiento en la nube (ej. MongoDB Atlas).
+- Añadir soporte para almacenamiento en la nube (ej. MongoDB Atlas). #UPDATE: Ya está disponible en VERCEL 👉 https://api-libros-bm.vercel.app/
 - Crear una interfaz gráfica con React para la gestión de la biblioteca.
 
 ---
 
 ## **Créditos**
-Desarrollado por [Brenda Mollaret]([https://github.com/tuusuario](https://github.com/tdhdump)).
+Desarrollado por [Brenda Mollaret]([https://github.com/tdhdump]).

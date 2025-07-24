@@ -3,8 +3,29 @@ const app = express();
 const dbconnect = require('./config/db');
 const librosRoutes = require('./routes/libros');
 
-app.use(express.json()); //middleware: función que se ejecuta entre el servidor y el cliente
+//Middleware
+const loggingMiddleware = require('./middlewares/loggingMiddleware');
+const errorMiddleware = require('./middlewares/errorMiddleware'); //Errores globles
+const notFoundMiddleware = require('./middlewares/notFoundMiddleware');  // Importamos el middleware de rutas no encontradas
+
+//cors
+const cors = require('cors');
+const corsOptions = require('./config/corsOptions');
+
+
+//CORS
+app.use(cors(corsOptions));
+
+
+// Middleware para rutas no encontradas
+app.use(loggingMiddleware); //Usamos el middleware de logging en toda la aplicación
+
+app.use(express.json());
 app.use(librosRoutes); 
+
+app.use(notFoundMiddleware); //Usamos el middleware de rutas no encontradas en toda la aplicación
+app.use(errorMiddleware); //Usamos el middleware de error en toda la aplicación
+
 
 dbconnect().then(() => {
     app.listen(3000, () => {

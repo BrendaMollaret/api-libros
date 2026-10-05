@@ -120,6 +120,13 @@ router.put("/libros/:id/prestar", async (req, res) => {
       return res.status(404).send({ mensaje: "Libro no encontrado" });
     }
 
+    // Solo se puede prestar un libro que esté disponible
+    if (libro.estado !== "Disponible") {
+      return res
+        .status(400)
+        .send({ mensaje: `El libro no está disponible, su estado es '${libro.estado}'` });
+    }
+
     libro.estado = "Prestado";
     libro.fechaPrestamo = new Date(); // Fecha de préstamo = fecha actual
 

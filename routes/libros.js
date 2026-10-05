@@ -5,6 +5,9 @@ const ModelLibro = require("../models/libromodel");
 const authMiddleware = require("../middlewares/authMiddleware");
 const errorMiddleware = require("../middlewares/errorMiddleware"); // Importamos el middleware de manejo de errores
 
+// Escapa los caracteres especiales para que el texto del usuario no se interprete como regex
+const escaparRegex = (texto) => texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 // Obtener todos los libros (sin filtros)
 router.get("/libros", async (req, res) => {
   try {
@@ -93,8 +96,9 @@ router.get("/libros/negocio/busqueda", async (req, res) => {
 
   try {
     const query = {};
-    if (autor) query.autor = autor; // Si el autor está en los query params, lo agregamos al query de la base de datos
-    if (categoria) query.categoria = categoria; // Si la categoría está, la agregamos
+    // Autor y categoría buscan coincidencias parciales sin distinguir mayúsculas
+    if (autor) query.autor = new RegExp(escaparRegex(autor), "i");
+    if (categoria) query.categoria = new RegExp(escaparRegex(categoria), "i");
     if (estado) query.estado = estado; // Si el estado está, también lo agregamos
 
     const libros = await ModelLibro.find(query);

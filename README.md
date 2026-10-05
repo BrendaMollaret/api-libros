@@ -16,6 +16,7 @@ Ideal para introducir conceptos clave como APIs RESTful, diseño backend y flujo
 - **Préstamos:** Cambiar el estado de los libros a "Prestado" y establecer fechas de préstamo y devolución.
 - **Devoluciones:** Cambiar el estado de los libros a "Disponible" y limpiar las fechas de préstamo.
 - **Filtros de búsqueda:** Buscar libros por autor, categoría o estado.
+- **Vencimientos:** Listar los préstamos atrasados y marcarlos como "Vencido".
 
 ---
 
@@ -81,6 +82,8 @@ gestor-biblioteca/
 | GET    | `/libros/negocio/busqueda`     | Busca libros por autor, categoría o estado |
 | PUT    | `/libros/:id/prestar`          | Marca un libro como "Prestado"         |
 | PUT    | `/libros/:id/devolver`         | Marca un libro como "Disponible"       |
+| GET    | `/libros/negocio/vencidos`     | Lista los libros con devolución vencida |
+| PUT    | `/libros/negocio/marcar-vencidos` | Marca como "Vencido" los préstamos atrasados |
 
 ---
 

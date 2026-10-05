@@ -8,6 +8,16 @@ const errorMiddleware = require("../middlewares/errorMiddleware"); // Importamos
 // Escapa los caracteres especiales para que el texto del usuario no se interprete como regex
 const escaparRegex = (texto) => texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+// Pasa a "Vencido" los libros prestados cuya fecha de devolución ya pasó
+// y devuelve la cantidad de libros actualizados
+const marcarVencidosAtrasados = async () => {
+  const resultado = await ModelLibro.updateMany(
+    { estado: "Prestado", fechaDevolucion: { $lt: new Date() } },
+    { estado: "Vencido" }
+  );
+  return resultado.modifiedCount;
+};
+
 // Obtener todos los libros (sin filtros)
 router.get("/libros", async (req, res) => {
   try {
@@ -190,14 +200,11 @@ router.get("/libros/negocio/vencidos", async (req, res) => {
 // Marcar como "Vencido" los libros prestados cuya fecha de devolución ya pasó
 router.put("/libros/negocio/marcar-vencidos", async (req, res) => {
   try {
-    const resultado = await ModelLibro.updateMany(
-      { estado: "Prestado", fechaDevolucion: { $lt: new Date() } },
-      { estado: "Vencido" }
-    );
+    const actualizados = await marcarVencidosAtrasados();
 
     res.status(200).send({
       mensaje: "Libros vencidos actualizados",
-      actualizados: resultado.modifiedCount,
+      actualizados,
     });
   } catch (error) {
     res.status(500).send({ mensaje: "Error al marcar los libros vencidos", error });

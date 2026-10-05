@@ -152,6 +152,11 @@ router.put("/libros/:id/devolver", async (req, res) => {
       return res.status(404).send({ mensaje: "Libro no encontrado" });
     }
 
+    // Solo se puede devolver un libro que esté prestado o vencido
+    if (libro.estado === "Disponible") {
+      return res.status(400).send({ mensaje: "El libro ya está disponible" });
+    }
+
     // Cambiamos el estado y limpiamos las fechas
     libro.estado = "Disponible";
     libro.fechaPrestamo = null;

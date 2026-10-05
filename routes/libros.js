@@ -169,4 +169,18 @@ router.put("/libros/:id/devolver", async (req, res) => {
   }
 });
 
+// Obtener los libros prestados cuya fecha de devolución ya pasó
+router.get("/libros/negocio/vencidos", async (req, res) => {
+  try {
+    const libros = await ModelLibro.find({
+      estado: { $in: ["Prestado", "Vencido"] },
+      fechaDevolucion: { $lt: new Date() }, // Fecha de devolución anterior a hoy
+    });
+
+    res.status(200).send(libros);
+  } catch (error) {
+    res.status(500).send({ mensaje: "Error al obtener los libros vencidos", error });
+  }
+});
+
 module.exports = router;

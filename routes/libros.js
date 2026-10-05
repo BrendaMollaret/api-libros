@@ -103,12 +103,17 @@ router.delete("/libros/:id", async (req, res) => {
 
 // Obtener libros según los filtros de búsqueda (autor, categoria, estado)
 router.get("/libros/negocio/busqueda", async (req, res) => {
-  const { autor, categoria, estado } = req.query; // Obtenemos autor, categoría y estado desde los query params
+  const { texto, autor, categoria, estado } = req.query; // Obtenemos texto, autor, categoría y estado desde los query params
 
   try {
     await marcarVencidosAtrasados(); // Así el filtro por estado "Vencido" siempre está al día
 
     const query = {};
+    // El texto libre busca en el título o en el autor
+    if (texto) {
+      const coincidencia = new RegExp(escaparRegex(texto), "i");
+      query.$or = [{ titulo: coincidencia }, { autor: coincidencia }];
+    }
     // Autor y categoría buscan coincidencias parciales sin distinguir mayúsculas
     if (autor) query.autor = new RegExp(escaparRegex(autor), "i");
     if (categoria) query.categoria = new RegExp(escaparRegex(categoria), "i");

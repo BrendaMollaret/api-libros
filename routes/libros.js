@@ -106,6 +106,8 @@ router.get("/libros/negocio/busqueda", async (req, res) => {
   const { autor, categoria, estado } = req.query; // Obtenemos autor, categoría y estado desde los query params
 
   try {
+    await marcarVencidosAtrasados(); // Así el filtro por estado "Vencido" siempre está al día
+
     const query = {};
     // Autor y categoría buscan coincidencias parciales sin distinguir mayúsculas
     if (autor) query.autor = new RegExp(escaparRegex(autor), "i");

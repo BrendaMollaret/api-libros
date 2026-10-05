@@ -21,6 +21,7 @@ const marcarVencidosAtrasados = async () => {
 // Obtener todos los libros (sin filtros)
 router.get("/libros", async (req, res) => {
   try {
+    await marcarVencidosAtrasados(); // Antes de listar, actualizamos los préstamos atrasados
     const libros = await ModelLibro.find(); // Devuelve todos los libros sin aplicar filtros
     res.status(200).send(libros);
   } catch (error) {

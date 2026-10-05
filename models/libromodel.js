@@ -15,6 +15,10 @@ const libroSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        portada: {
+            type: String, // URL de la imagen de portada (opcional)
+            trim: true,
+        },
         estado: {
             type: String,
             enum: ['Disponible', 'Prestado', 'Vencido'], // Definimos estados posibles del libro

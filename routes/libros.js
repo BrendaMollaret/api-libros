@@ -183,4 +183,21 @@ router.get("/libros/negocio/vencidos", async (req, res) => {
   }
 });
 
+// Marcar como "Vencido" los libros prestados cuya fecha de devolución ya pasó
+router.put("/libros/negocio/marcar-vencidos", async (req, res) => {
+  try {
+    const resultado = await ModelLibro.updateMany(
+      { estado: "Prestado", fechaDevolucion: { $lt: new Date() } },
+      { estado: "Vencido" }
+    );
+
+    res.status(200).send({
+      mensaje: "Libros vencidos actualizados",
+      actualizados: resultado.modifiedCount,
+    });
+  } catch (error) {
+    res.status(500).send({ mensaje: "Error al marcar los libros vencidos", error });
+  }
+});
+
 module.exports = router;
